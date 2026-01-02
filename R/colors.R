@@ -17,10 +17,9 @@
 #' @param \dots graphical parameters (\code{\link{par}}) can be given as
 #' argument to \code{pizza}
 #' @author Gaston Sanchez
-#' @seealso \code{\link{wheel}}
 #' @export
 #' @examples
-#'
+#' 
 #' # pizza color wheel for rainbow colors
 #' pizza(rainbow(7))
 #' 
@@ -112,8 +111,7 @@ pizza <-
 #' @return A character vector with the given color and the tetradic colors in
 #' hexadecimal notation
 #' @author Gaston Sanchez
-#' @seealso \code{\link{complementary}}, \code{\link{splitComp}},
-#' \code{\link{adjacent}}, \code{\link{triadic}}, \code{\link{square}}
+#' @seealso \code{\link{adjacent}}, \code{\link{complementary}}
 #' @export
 #' @examples
 #' # tetradic colors for 'tomato'
@@ -222,7 +220,7 @@ setColors <-
 #'@param color an R color name or a color in hexadecimal notation
 #'@return A character vector with the color(s) name(s) in hexadecimal notation
 #'@author Gaston Sanchez
-#'@seealso \code{\link{wheel}}
+#'@seealso \code{\link{setColors}}
 #'@export
 #'@examples
 #'
@@ -344,8 +342,7 @@ function(color, percentage=5, what="saturation",
 #' @return A character vector with the given color and the analogous colors in
 #' hexadecimal notation
 #' @author Gaston Sanchez
-#' @seealso \code{\link{complementary}}, \code{\link{splitComp}},
-#' \code{\link{triadic}}, \code{\link{tetradic}}, \code{\link{square}}
+#' @seealso \code{\link{complementary}}, \code{\link{tetradic}}
 #' @export
 #' @examples
 #' # analogous colors of 'red'
@@ -438,8 +435,7 @@ function(color, plot=TRUE, bg="white", labcol=NULL, cex=0.8, title=TRUE)
 #' @return A character vector with the given color and the complementary color
 #' in hexadecimal notation
 #' @author Gaston Sanchez
-#' @seealso \code{\link{adjacent}}, \code{\link{splitComp}},
-#' \code{\link{triadic}}, \code{\link{tetradic}}, \code{\link{square}}
+#' @seealso \code{\link{adjacent}}, \code{\link{tetradic}}
 #' @export
 #' @examples
 #' # complementary color of 'tomato' with no plot
@@ -491,3 +487,7 @@ function(color, plot=TRUE, bg="white", labcol=NULL, cex=0.8, title=TRUE)
     # result
     comp_colors
 }
+
+#' @rdname complementary
+#' @export
+opposite <- complementary

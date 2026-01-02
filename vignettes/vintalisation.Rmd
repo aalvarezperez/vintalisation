@@ -1,0 +1,80 @@
+---
+title: "Getting Started with vintalisation"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Getting Started with vintalisation}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include=FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+## Installation
+
+``` r
+# install.packages("devtools")
+devtools::install_github("aalvarezperez/vintalisation")
+```
+
+For local development, install from the working tree:
+
+``` r
+devtools::install_local("/path/to/vintalisation", build = TRUE, upgrade = "never")
+```
+
+```{r setup, message=FALSE}
+library(vintalisation)
+library(ggplot2)
+```
+
+## Inspecting palettes
+
+```{r show-palette}
+show_palette("adevinta_brand_1")
+```
+
+`get_palette()` returns a palette function you can pass to other tooling:
+
+```{r get-palette}
+get_palette("bol_brand_1")(10)
+```
+
+## Scales and themes
+
+```{r scales}
+p <- ggplot(mtcars, aes(factor(cyl), fill = factor(gear))) +
+  geom_bar() +
+  scale_fill_my_palette("studio_accessibility_1") +
+  theme_custom("marktplaats")
+p
+```
+
+## Manychat preset (typography + colours)
+
+```{r manychat, eval=FALSE}
+ggplot(mtcars, aes(factor(cyl), fill = factor(gear))) +
+  geom_bar() +
+  scale_fill_manychat() +
+  theme_manychat()
+```
+
+Switch to dark mode while keeping the same data and mappings:
+
+```{r dark-mode, eval=FALSE}
+p + my_dark_mode()
+```
+
+## Saving plots
+
+Use `make_plot()` to enforce consistent dimensions and DPI.
+
+```{r eval=FALSE}
+make_plot("mtcars-gears.png")
+```
+
+This writes to `./visualisations` relative to the current working directory.

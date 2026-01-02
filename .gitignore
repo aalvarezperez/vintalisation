@@ -1,0 +1,13 @@
+/doc/
+/Meta/
+.DS_Store
+R/.DS_Store
+inst/.DS_Store
+.Rhistory
+.RData
+.Rproj.user
+.Rapp.history
+**/.DS_Store
+**/.Rhistory
+**/.RData
+**/.Rapp.history

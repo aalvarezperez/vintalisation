@@ -1,0 +1,60 @@
+---
+title: "Defining Custom Palettes"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Defining Custom Palettes}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include=FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+`vintalisation` reads palettes from `inst/palettes.yml` when the package loads.
+Each entry contains a key, a vector of colours, and optional metadata.
+
+```yaml
+bol:
+  colours: ["#0046BE", "#FFD200", "#333333"]
+  meta: {brand: bol}
+```
+
+## Adding a palette
+
+1. Add a new block at the end of `inst/palettes.yml`.
+2. Reload the package (e.g., `devtools::load_all()`).
+3. Verify with `show_palette("your_name")`.
+
+```{r, eval=FALSE}
+new_palette:
+  colours: ["#101010", "#f5a623", "#50e3c2"]
+  meta: {brand: custom}
+```
+
+## Testing the palette
+
+```{r, message=FALSE}
+library(vintalisation)
+library(ggplot2)
+
+palette_name <- "adevinta_brand_1"
+ggplot(mpg, aes(class, fill = manufacturer)) +
+  geom_bar() +
+  scale_fill_my_palette(palette_name) +
+  theme_custom()
+```
+
+## Programmatic access
+
+Use `get_colors()` when you need to manipulate colour vectors directly.
+
+```{r}
+head(get_colors("adevinta_brand_1"))
+head(get_colors(pattern = "^partner"))
+```
+
+You can also serialize palettes back to YAML or JSON using any preferred method once obtained as plain vectors.
