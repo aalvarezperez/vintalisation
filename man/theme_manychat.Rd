@@ -5,8 +5,10 @@
 \title{Manychat branded theme}
 \usage{
 theme_manychat(
-  market = "adevinta",
-  base_size = 18/ggplot2::.pt,
+  market = "manychat",
+  base_size = 24,
+  base_family = "Rooftop",
+  heading_family = "Manychat Gravity",
   bg_fill = "#FFFFFF",
   blank_plot_bg = TRUE
 )
@@ -15,6 +17,11 @@ theme_manychat(
 \item{market}{One of "adevinta","marktplaats","gumtree","kijiji","2dehands"}
 
 \item{base_size}{Base font size}
+
+\item{base_family}{Base font family (defaults to "DM Sans")}
+
+\item{heading_family}{Font family for titles/subtitles (defaults to
+`base_family`).}
 
 \item{bg_fill}{Plot background colour}
 

@@ -6,7 +6,7 @@
 \usage{
 theme_custom(
   market = "adevinta",
-  base_size = 18/ggplot2::.pt,
+  base_size = 24,
   base_family = "DM Sans",
   heading_family = base_family,
   bg_fill = "#FFFFFF",
@@ -18,7 +18,7 @@ theme_custom(
 
 \item{base_size}{Base font size}
 
-\item{base_family}{Base font family}
+\item{base_family}{Base font family (defaults to "DM Sans")}
 
 \item{heading_family}{Font family for titles/subtitles (defaults to
 `base_family`).}

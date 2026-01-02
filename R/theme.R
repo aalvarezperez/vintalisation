@@ -2,7 +2,7 @@
 #'
 #' @param market  One of "adevinta","marktplaats","gumtree","kijiji","2dehands"
 #' @param base_size  Base font size
-#' @param base_family Base font family
+#' @param base_family Base font family (defaults to "DM Sans")
 #' @param heading_family Font family for titles/subtitles (defaults to
 #'   `base_family`).
 #' @param bg_fill Plot background colour
@@ -10,36 +10,74 @@
 #'   `bg_fill`, otherwise keep it blank.
 #' @export
 theme_custom <- function(market = "adevinta",
-                         base_size = 18 / ggplot2::.pt,
+                         base_size = 24,
                          base_family = "DM Sans",
                          heading_family = base_family,
                          bg_fill = "#FFFFFF",
                          blank_plot_bg = TRUE) {
 
+  textcol <- .market_text_colour(market)
+  plot_bg <- .plot_background(blank_plot_bg, bg_fill)
+  .apply_base_theme(base_family, heading_family, base_size, textcol, plot_bg)
+}
+
+.market_text_colour <- function(market) {
   text_cols <- c(
     adevinta    = "#1d1f2a",
     marktplaats = "#2D3C4D",
     gumtree     = "#3c3241",
     kijiji      = "#3E4153",
-    `2dehands`  = "#00285A"
+    `2dehands`  = "#00285A",
+    manychat    = "#1F1F1F"
   )
-  textcol <- text_cols[[market]]
+  if (!market %in% names(text_cols)) stop("Unknown market: ", market, call. = FALSE)
+  text_cols[[market]]
+}
 
-  PLOT_BG <- if (blank_plot_bg) ggplot2::element_rect(fill = bg_fill, colour = bg_fill)
-  else ggplot2::element_blank()
+.plot_background <- function(blank_plot_bg, bg_fill) {
+  if (blank_plot_bg) {
+    ggplot2::element_rect(fill = bg_fill, colour = bg_fill)
+  } else {
+    ggplot2::element_blank()
+  }
+}
 
+.apply_base_theme <- function(base_family, heading_family, base_size, textcol, plot_bg) {
   ggthemes::theme_tufte(base_family = base_family, base_size = base_size) %+replace%
     ggplot2::theme(
       text = ggplot2::element_text(colour = textcol, size = base_size),
-      plot.title = ggplot2::element_text(family = heading_family, face = "bold"),
-      plot.subtitle = ggplot2::element_text(family = heading_family),
+      plot.title = ggplot2::element_text(
+        family = heading_family,
+        face = "bold",
+        size = base_size * 1.6,
+        margin = ggplot2::margin(b = base_size * 0.5)
+      ),
+      plot.subtitle = ggplot2::element_text(
+        family = heading_family,
+        size = base_size * 1.2,
+        margin = ggplot2::margin(b = base_size * 0.35)
+      ),
+      axis.title = ggplot2::element_text(
+        size = base_size * 1.05,
+        margin = ggplot2::margin(t = base_size * 0.4)
+      ),
+      axis.text = ggplot2::element_text(size = base_size * 0.9),
+      legend.title = ggplot2::element_text(size = base_size),
+      legend.text = ggplot2::element_text(size = base_size * 0.85),
       panel.grid.major.x = ggplot2::element_blank(),
       panel.grid.major.y = ggplot2::element_line(colour = "grey80", linewidth = .25),
       axis.ticks = ggplot2::element_blank(),
       axis.line.x = ggplot2::element_line(colour = textcol, linewidth = .35),
       axis.line.y = ggplot2::element_blank(),
-      plot.background = PLOT_BG,
-      legend.key.size = grid::unit(7, "pt")
+      plot.background = plot_bg,
+      legend.key.size = grid::unit(7, "pt"),
+      plot.margin = ggplot2::margin(
+        t = base_size,
+        r = base_size,
+        b = base_size,
+        l = base_size
+      ),
+      panel.spacing = grid::unit(base_size * 0.7, "pt")
     )
 }
 
@@ -68,16 +106,18 @@ register_manychat_fonts <- function() {
 #'
 #' @inheritParams theme_custom
 #' @export
-theme_manychat <- function(market = "adevinta",
-                           base_size = 18 / ggplot2::.pt,
+theme_manychat <- function(market = "manychat",
+                           base_size = 24,
+                           base_family = "Rooftop",
+                           heading_family = "Manychat Gravity",
                            bg_fill = "#FFFFFF",
                            blank_plot_bg = TRUE) {
   register_manychat_fonts()
   theme_custom(
     market = market,
     base_size = base_size,
-    base_family = "Manychat Gravity",
-    heading_family = "Rooftop",
+    base_family = base_family,
+    heading_family = heading_family,
     bg_fill = bg_fill,
     blank_plot_bg = blank_plot_bg
   )
