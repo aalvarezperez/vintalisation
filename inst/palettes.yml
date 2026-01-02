@@ -1,0 +1,186 @@
+adevinta_brand_1:
+  colours: ["#BDE2EA", "#91B495", "#B6AAF9", "#FFD684", "#EEF2A6", "#ECB3C7", "#6E0AD6"]
+  meta:
+    category: brand
+    source: adevinta
+    variant: core
+    tags: ["brand", "core", "default"]
+
+adevinta_brand_2:
+  colours: ["#0D1A2D", "#1F2E45", "#516074", "#8C99AA", "#D6DCE3"]
+  meta:
+    category: brand
+    source: adevinta
+    variant: neutral
+    tags: ["brand", "neutral"]
+
+adevinta_brand_3:
+  colours: ["#13293D", "#005377", "#0074A2", "#F0C808", "#F18805", "#D95D39"]
+  meta:
+    category: brand
+    source: adevinta
+    variant: heat
+    tags: ["brand", "gradient", "heatmap"]
+
+bol_brand_1:
+  colours: ["#0046BE", "#0F8AFD", "#FFD200", "#FFFFFF", "#1F1F1F"]
+  meta:
+    category: brand
+    source: bol
+    variant: primary
+    tags: ["brand", "primary"]
+
+bol_brand_2:
+  colours: ["#D9E9FF", "#ADCFFF", "#FFE480", "#FFCF33", "#FF8F1C"]
+  meta:
+    category: brand
+    source: bol
+    variant: accent
+    tags: ["brand", "accent"]
+
+marktplaats_brand_1:
+  colours: ["#E87A1A", "#EDA566", "#A4E831", "#02C0E8", "#B80EE8"]
+  meta:
+    category: brand
+    source: marktplaats
+    variant: core
+    tags: ["brand", "core"]
+
+marktplaats_brand_2:
+  colours: ["#102840", "#2D3C4D", "#5A6A7C", "#B2BBC6", "#F2F4F7"]
+  meta:
+    category: brand
+    source: marktplaats
+    variant: neutral
+    tags: ["brand", "neutral"]
+
+gumtree_brand_1:
+  colours: ["#3C3241", "#E37327", "#9D10E3", "#B9E327", "#05D5E3"]
+  meta:
+    category: brand
+    source: gumtree
+    variant: primary
+    tags: ["brand", "primary"]
+
+gumtree_brand_2:
+  colours: ["#2A2040", "#FF6F61", "#FFB347", "#6FE06F", "#19D1D8"]
+  meta:
+    category: brand
+    source: gumtree
+    variant: accent
+    tags: ["brand", "accent", "vibrant"]
+
+kijiji_brand_1:
+  colours: ["#373373", "#E64839", "#2F22E6", "#E6C30B", "#17E673"]
+  meta:
+    category: brand
+    source: kijiji
+    variant: primary
+    tags: ["brand", "primary"]
+
+kijiji_brand_2:
+  colours: ["#002159", "#5E17EB", "#FF7A59", "#FFD23F", "#0AD4FF"]
+  meta:
+    category: brand
+    source: kijiji
+    variant: accent
+    tags: ["brand", "accent"]
+
+adevinta_editorial_1:
+  colours: ["#25064C", "#36175E", "#F05D5E", "#F2C14E", "#F78154"]
+  meta:
+    category: editorial
+    source: adevinta
+    variant: sunrise
+    tags: ["storytelling", "warm"]
+
+adevinta_editorial_2:
+  colours: ["#0B1E3D", "#102A54", "#1F4273", "#5B7DB1", "#C4D7F2"]
+  meta:
+    category: editorial
+    source: adevinta
+    variant: midnight
+    tags: ["storytelling", "cool"]
+
+adevinta_campaign_1:
+  colours: ["#541388", "#B71375", "#F76E11", "#FFC700", "#FFE8C2"]
+  meta:
+    category: campaign
+    source: adevinta
+    tone: warm
+    tags: ["campaign", "warm"]
+
+adevinta_campaign_2:
+  colours: ["#102542", "#235789", "#09A7A1", "#6CE5E8", "#EEF8FA"]
+  meta:
+    category: campaign
+    source: adevinta
+    tone: cool
+    tags: ["campaign", "cool"]
+
+studio_accessibility_1:
+  colours: ["#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7"]
+  meta:
+    category: accessibility
+    source: studio
+    variant: bright
+    tags: ["colorblind_safe", "high_contrast"]
+
+studio_accessibility_2:
+  colours: ["#E8C1A5", "#A6C8E6", "#8FCFBB", "#F0E6A2", "#9BB2D4", "#E6A5A9", "#D6B7D8"]
+  meta:
+    category: accessibility
+    source: studio
+    variant: soft
+    tags: ["colorblind_safe", "soft"]
+
+manychat_diverging_1:
+  colours: ["#3B42C4", "#C18900", "#E1E090", "#FF4B00"]
+  meta:
+    category: partner
+    source: manychat
+    type: diverging
+    variant: combo1
+    tags: ["partner", "manychat"]
+
+manychat_diverging_2:
+  colours: ["#007232", "#C18900", "#E5BDBE", "#FA0CF7"]
+  meta:
+    category: partner
+    source: manychat
+    type: diverging
+    variant: combo2
+    tags: ["partner", "manychat"]
+
+manychat_diverging_3:
+  colours: ["#3B42C4", "#007232", "#E1E090", "#FFF100"]
+  meta:
+    category: partner
+    source: manychat
+    type: diverging
+    variant: combo3
+    tags: ["partner", "manychat"]
+
+studio_diverging_1:
+  colours: ["#3B42C4", "#FF4B00", "#007232", "#00F6FF", "#FA0CF7"]
+  meta:
+    category: diverging
+    source: studio
+    style: vibrant
+    tags: ["diverging", "vibrant"]
+
+studio_diverging_2:
+  colours: ["#7B34CE", "#00F613", "#C18900", "#96DAE2", "#BC1E5D"]
+  meta:
+    category: diverging
+    source: studio
+    style: professional
+    tags: ["diverging", "balanced"]
+
+studio_diverging_3:
+  colours: ["#E5BDBE", "#98E891", "#E1E090", "#3B42C4", "#D2B6DE"]
+  meta:
+    category: diverging
+    source: studio
+    style: soft
+    tags: ["diverging", "soft"]

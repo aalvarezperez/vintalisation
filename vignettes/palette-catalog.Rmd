@@ -1,0 +1,50 @@
+---
+title: "Palette Catalog"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Palette Catalog}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include=FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup, message=FALSE}
+library(vintalisation)
+library(scales)
+library(yaml)
+```
+
+## Overview
+
+This catalog renders every palette defined in `inst/palettes.yml`, grouped by the `category` tag.
+
+```{r catalog, echo=FALSE, results='asis'}
+meta <- yaml::read_yaml(system.file("palettes.yml", package = "vintalisation"))
+palettes <- vintalisation:::palettes_list
+get_category <- function(entry) {
+  cat <- entry$meta$category
+  if (is.null(cat)) "misc" else cat
+}
+by_cat <- split(names(meta), vapply(meta, get_category, character(1)))
+
+for (cat in names(by_cat)) {
+  cat("### ", gsub("_", " ", toupper(cat)), "\n\n", sep = "")
+  for (nm in by_cat[[cat]]) {
+    tag_line <- if (!is.null(meta[[nm]]$meta$tags)) {
+      paste(meta[[nm]]$meta$tags, collapse = ", ")
+    } else {
+      "untagged"
+    }
+    cat("**", nm, "**  ", "`", tag_line, "`\n\n", sep = "")
+    show_palette <- palettes[[nm]]
+    scales::show_col(show_palette)
+    cat("\n\n")
+  }
+}
+```
