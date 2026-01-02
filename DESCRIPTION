@@ -8,3 +8,8 @@ Description: Utility functions and custom scales for custom palettes in ggplot2.
 License: MIT
 Encoding: UTF-8
 LazyData: true
+Suggests:
+    ggplot2,
+    ggthemes,
+    testthat (>= 3.0.0)
+Config/testthat/edition: 3
