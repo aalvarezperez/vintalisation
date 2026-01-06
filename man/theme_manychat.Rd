@@ -10,7 +10,9 @@ theme_manychat(
   base_family = "Rooftop",
   heading_family = "Manychat Gravity",
   bg_fill = "#FFFFFF",
-  blank_plot_bg = TRUE
+  blank_plot_bg = TRUE,
+  legend_position = "bottom",
+  show_y_axis = FALSE
 )
 }
 \arguments{
@@ -27,6 +29,11 @@ theme_manychat(
 
 \item{blank_plot_bg}{Logical; if `TRUE`, draw the plot background using
 `bg_fill`, otherwise keep it blank.}
+
+\item{legend_position}{Position of the legend: "bottom", "top", "left",
+"right", or "none".}
+
+\item{show_y_axis}{Logical; if `TRUE`, display the Y-axis line.}
 }
 \description{
 Manychat branded theme
