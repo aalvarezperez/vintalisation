@@ -53,9 +53,9 @@ test_that("theme_custom sets y-axis title to horizontal", {
 test_that("theme_custom legend key size scales with base_size", {
   th_small <- theme_custom(base_size = 12)
   th_large <- theme_custom(base_size = 24)
-  # Legend key should scale proportionally (base_size * 0.6)
-  expect_equal(as.numeric(th_small$legend.key.size), 12 * 0.6)
-  expect_equal(as.numeric(th_large$legend.key.size), 24 * 0.6)
+  # Legend key should scale proportionally (base_size * 0.8)
+  expect_equal(as.numeric(th_small$legend.key.size), 12 * 0.8)
+  expect_equal(as.numeric(th_large$legend.key.size), 24 * 0.8)
 })
 
 test_that("theme_custom legend_position defaults to bottom", {
@@ -80,6 +80,38 @@ test_that("theme_custom show_y_axis defaults to FALSE (blank)", {
 test_that("theme_custom show_y_axis = TRUE shows y-axis line", {
   th <- theme_custom(show_y_axis = TRUE)
   expect_s3_class(th$axis.line.y, "element_line")
+})
+
+test_that("theme_custom y_axis_angle parameter changes angle", {
+  th_horizontal <- theme_custom(y_axis_angle = 0)
+  th_vertical <- theme_custom(y_axis_angle = 90)
+  expect_equal(th_horizontal$axis.title.y$angle, 0)
+  expect_equal(th_vertical$axis.title.y$angle, 90)
+})
+
+test_that("theme_custom sets horizontal legend direction for bottom/top", {
+  th_bottom <- theme_custom(legend_position = "bottom")
+  th_top <- theme_custom(legend_position = "top")
+  expect_equal(th_bottom$legend.direction, "horizontal")
+  expect_equal(th_top$legend.direction, "horizontal")
+})
+
+test_that("theme_custom sets vertical legend direction for left/right", {
+  th_left <- theme_custom(legend_position = "left")
+  th_right <- theme_custom(legend_position = "right")
+  expect_equal(th_left$legend.direction, "vertical")
+  expect_equal(th_right$legend.direction, "vertical")
+})
+
+test_that("theme_custom includes caption styling", {
+  th <- theme_custom()
+  expect_s3_class(th$plot.caption, "element_text")
+})
+
+test_that("theme_custom includes strip styling for facets", {
+  th <- theme_custom()
+  expect_s3_class(th$strip.text, "element_text")
+  expect_s3_class(th$strip.background, "element_blank")
 })
 
 # Test theme_manychat

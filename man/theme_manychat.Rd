@@ -12,11 +12,12 @@ theme_manychat(
   bg_fill = "#FFFFFF",
   blank_plot_bg = TRUE,
   legend_position = "bottom",
-  show_y_axis = FALSE
+  show_y_axis = FALSE,
+  y_axis_angle = 0
 )
 }
 \arguments{
-\item{market}{One of "adevinta","marktplaats","gumtree","kijiji","2dehands"}
+\item{market}{One of "adevinta","marktplaats","gumtree","kijiji","2dehands","manychat"}
 
 \item{base_size}{Base font size}
 
@@ -34,6 +35,9 @@ theme_manychat(
 "right", or "none".}
 
 \item{show_y_axis}{Logical; if `TRUE`, display the Y-axis line.}
+
+\item{y_axis_angle}{Angle for y-axis title (default 0 for horizontal,
+use 90 for vertical when labels are long).}
 }
 \description{
 Manychat branded theme

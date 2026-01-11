@@ -2,15 +2,17 @@
 % Please edit documentation in R/utils.R
 \name{make_plot}
 \alias{make_plot}
-\title{Save a ggplot into ./visualisations}
+\title{Save a ggplot with sensible defaults}
 \usage{
 make_plot(
   filename,
   plot = ggplot2::last_plot(),
+  path = file.path(getwd(), "visualisations"),
   device = "png",
   height = 2500,
-  scale = 16/9,
-  unit = "px"
+  aspect_ratio = 16/9,
+  unit = "px",
+  dpi = "retina"
 )
 }
 \arguments{
@@ -18,14 +20,18 @@ make_plot(
 
 \item{plot}{Plot object to save.}
 
+\item{path}{Output directory (default: "./visualisations"). Created if needed.}
+
 \item{device}{Graphics device to use (e.g. `"png"`).}
 
 \item{height}{Height of the output file (default pixels).}
 
-\item{scale}{Aspect ratio multiplier (defaults to 16/9).}
+\item{aspect_ratio}{Width/height ratio (defaults to 16/9).}
 
 \item{unit}{Units for width/height, defaults to `"px"`.}
+
+\item{dpi}{Resolution: "retina" (320), "print" (300), "screen" (72), or numeric.}
 }
 \description{
-Save a ggplot into ./visualisations
+Save a ggplot with sensible defaults
 }

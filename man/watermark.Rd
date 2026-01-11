@@ -6,10 +6,10 @@
 \usage{
 watermark(
   text = "Not validated",
-  xmin,
-  xmax,
-  ymin,
-  ymax,
+  xmin = -Inf,
+  xmax = Inf,
+  ymin = -Inf,
+  ymax = Inf,
   scale = 1,
   rot = 0,
   col = "grey",
@@ -19,7 +19,8 @@ watermark(
 \arguments{
 \item{text}{Label to display as a watermark.}
 
-\item{xmin, xmax, ymin, ymax}{Numeric bounds for the annotation.}
+\item{xmin, xmax, ymin, ymax}{Numeric bounds for the annotation. Defaults to
+`-Inf`/`Inf` to span entire plot.}
 
 \item{scale}{Scaling factor applied to the watermark text size.}
 
@@ -33,5 +34,6 @@ watermark(
 A ggplot2 annotation layer.
 }
 \description{
-Watermark layer
+Adds a text watermark annotation to a ggplot. By default spans the entire
+plot area.
 }
