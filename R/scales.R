@@ -310,6 +310,122 @@ scale_fill_stepsn_manychat <- function(palette = "manychat_diverging_1",
 }
 
 # -------------------------------------------------------------------------
+# Clever axis scales (human-readable abbreviations)
+# -------------------------------------------------------------------------
+
+#' Continuous y-scale with human-readable number labels
+#'
+#' Wrapper around \code{\link[ggplot2]{scale_y_continuous}} that formats large
+#' numbers with K/M/B suffixes (e.g., 1000 -> 1K, 1500000 -> 1.5M).
+#'
+#' @param name The name of the scale (axis title).
+#' @param breaks Breaks specification (see \code{\link[ggplot2]{scale_y_continuous}}).
+#' @param n.breaks Number of breaks (alternative to \code{breaks}).
+#' @param limits Axis limits as a two-element numeric vector.
+#' @param expand Expansion specification (see \code{\link[ggplot2]{expansion}}).
+#' @param accuracy Number to round to (e.g., 0.1 for one decimal place).
+#' @param ... Additional arguments passed to \code{\link[ggplot2]{scale_y_continuous}}.
+#' @export
+scale_y_clever_number <- function(name = ggplot2::waiver(),
+                                  breaks = ggplot2::waiver(),
+                                  n.breaks = NULL,
+                                  limits = NULL,
+                                  expand = ggplot2::waiver(),
+                                  accuracy = 1,
+                                  ...) {
+  ggplot2::scale_y_continuous(
+    name = name,
+    breaks = breaks,
+    n.breaks = n.breaks,
+    limits = limits,
+    expand = expand,
+    labels = scales::label_number(scale_cut = scales::cut_short_scale(), accuracy = accuracy),
+    ...
+  )
+}
+
+#' @rdname scale_y_clever_number
+#' @export
+scale_x_clever_number <- function(name = ggplot2::waiver(),
+                                  breaks = ggplot2::waiver(),
+                                  n.breaks = NULL,
+                                  limits = NULL,
+                                  expand = ggplot2::waiver(),
+                                  accuracy = 1,
+                                  ...) {
+  ggplot2::scale_x_continuous(
+    name = name,
+    breaks = breaks,
+    n.breaks = n.breaks,
+    limits = limits,
+    expand = expand,
+    labels = scales::label_number(scale_cut = scales::cut_short_scale(), accuracy = accuracy),
+    ...
+  )
+}
+
+#' Continuous y-scale with human-readable dollar labels
+#'
+#' Wrapper around \code{\link[ggplot2]{scale_y_continuous}} that formats large
+#' dollar amounts with K/M/B suffixes (e.g., 1000 -> $1K, 1500000 -> $1.5M).
+#'
+#' @inheritParams scale_y_clever_number
+#' @param prefix Currency symbol (default "$").
+#' @param suffix Optional suffix after the number.
+#' @export
+scale_y_clever_dollar <- function(name = ggplot2::waiver(),
+                                  breaks = ggplot2::waiver(),
+                                  n.breaks = NULL,
+                                  limits = NULL,
+                                  expand = ggplot2::waiver(),
+                                  accuracy = 1,
+                                  prefix = "$",
+                                  suffix = "",
+                                  ...) {
+  ggplot2::scale_y_continuous(
+    name = name,
+    breaks = breaks,
+    n.breaks = n.breaks,
+    limits = limits,
+    expand = expand,
+    labels = scales::label_dollar(
+      scale_cut = scales::cut_short_scale(),
+      accuracy = accuracy,
+      prefix = prefix,
+      suffix = suffix
+    ),
+    ...
+  )
+}
+
+#' @rdname scale_y_clever_dollar
+#' @export
+scale_x_clever_dollar <- function(name = ggplot2::waiver(),
+                                  breaks = ggplot2::waiver(),
+                                  n.breaks = NULL,
+                                  limits = NULL,
+                                  expand = ggplot2::waiver(),
+                                  accuracy = 1,
+                                  prefix = "$",
+                                  suffix = "",
+                                  ...) {
+  ggplot2::scale_x_continuous(
+    name = name,
+    breaks = breaks,
+    n.breaks = n.breaks,
+    limits = limits,
+    expand = expand,
+    labels = scales::label_dollar(
+      scale_cut = scales::cut_short_scale(),
+      accuracy = accuracy,
+      prefix = prefix,
+      suffix = suffix
+    ),
+    ...
+  )
+}
+
+# -------------------------------------------------------------------------
 # Manual helper
 # -------------------------------------------------------------------------
 
