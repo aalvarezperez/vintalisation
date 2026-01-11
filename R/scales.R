@@ -310,117 +310,52 @@ scale_fill_stepsn_manychat <- function(palette = "manychat_diverging_1",
 }
 
 # -------------------------------------------------------------------------
-# Clever axis scales (human-readable abbreviations)
+# Clever label functions (human-readable abbreviations)
 # -------------------------------------------------------------------------
 
-#' Continuous y-scale with human-readable number labels
+#' Human-readable number labels with K/M/B suffixes
 #'
-#' Wrapper around \code{\link[ggplot2]{scale_y_continuous}} that formats large
-#' numbers with K/M/B suffixes (e.g., 1000 -> 1K, 1500000 -> 1.5M).
+#' Label function for use with ggplot2 scales. Formats large numbers with
+#' K/M/B suffixes (e.g., 1000 -> 1K, 1500000 -> 1.5M).
 #'
-#' @param name The name of the scale (axis title).
-#' @param breaks Breaks specification (see \code{\link[ggplot2]{scale_y_continuous}}).
-#' @param n.breaks Number of breaks (alternative to \code{breaks}).
-#' @param limits Axis limits as a two-element numeric vector.
-#' @param expand Expansion specification (see \code{\link[ggplot2]{expansion}}).
 #' @param accuracy Number to round to (e.g., 0.1 for one decimal place).
-#' @param ... Additional arguments passed to \code{\link[ggplot2]{scale_y_continuous}}.
+#' @param ... Additional arguments passed to \code{\link[scales]{label_number}}.
+#' @return A labeling function for use with \code{labels} argument in scales.
 #' @export
-scale_y_clever_number <- function(name = ggplot2::waiver(),
-                                  breaks = ggplot2::waiver(),
-                                  n.breaks = NULL,
-                                  limits = NULL,
-                                  expand = ggplot2::waiver(),
-                                  accuracy = 1,
-                                  ...) {
-  ggplot2::scale_y_continuous(
-    name = name,
-    breaks = breaks,
-    n.breaks = n.breaks,
-    limits = limits,
-    expand = expand,
-    labels = scales::label_number(scale_cut = scales::cut_short_scale(), accuracy = accuracy),
-    ...
-  )
+#' @examples
+#' \dontrun{
+#' ggplot(data, aes(x, y)) +
+#'   geom_point() +
+#'   scale_y_continuous(labels = label_clever_number())
+#' }
+label_clever_number <- function(accuracy = 1, ...) {
+
+  scales::label_number(scale_cut = scales::cut_short_scale(), accuracy = accuracy, ...)
 }
 
-#' @rdname scale_y_clever_number
-#' @export
-scale_x_clever_number <- function(name = ggplot2::waiver(),
-                                  breaks = ggplot2::waiver(),
-                                  n.breaks = NULL,
-                                  limits = NULL,
-                                  expand = ggplot2::waiver(),
-                                  accuracy = 1,
-                                  ...) {
-  ggplot2::scale_x_continuous(
-    name = name,
-    breaks = breaks,
-    n.breaks = n.breaks,
-    limits = limits,
-    expand = expand,
-    labels = scales::label_number(scale_cut = scales::cut_short_scale(), accuracy = accuracy),
-    ...
-  )
-}
-
-#' Continuous y-scale with human-readable dollar labels
+#' Human-readable dollar labels with K/M/B suffixes
 #'
-#' Wrapper around \code{\link[ggplot2]{scale_y_continuous}} that formats large
-#' dollar amounts with K/M/B suffixes (e.g., 1000 -> $1K, 1500000 -> $1.5M).
+#' Label function for use with ggplot2 scales. Formats large dollar amounts
+#' with K/M/B suffixes (e.g., 1000 -> $1K, 1500000 -> $1.5M).
 #'
-#' @inheritParams scale_y_clever_number
+#' @param accuracy Number to round to (e.g., 0.1 for one decimal place).
 #' @param prefix Currency symbol (default "$").
 #' @param suffix Optional suffix after the number.
+#' @param ... Additional arguments passed to \code{\link[scales]{label_dollar}}.
+#' @return A labeling function for use with \code{labels} argument in scales.
 #' @export
-scale_y_clever_dollar <- function(name = ggplot2::waiver(),
-                                  breaks = ggplot2::waiver(),
-                                  n.breaks = NULL,
-                                  limits = NULL,
-                                  expand = ggplot2::waiver(),
-                                  accuracy = 1,
-                                  prefix = "$",
-                                  suffix = "",
-                                  ...) {
-  ggplot2::scale_y_continuous(
-    name = name,
-    breaks = breaks,
-    n.breaks = n.breaks,
-    limits = limits,
-    expand = expand,
-    labels = scales::label_dollar(
-      scale_cut = scales::cut_short_scale(),
-      accuracy = accuracy,
-      prefix = prefix,
-      suffix = suffix
-    ),
-    ...
-  )
-}
-
-#' @rdname scale_y_clever_dollar
-#' @export
-scale_x_clever_dollar <- function(name = ggplot2::waiver(),
-                                  breaks = ggplot2::waiver(),
-                                  n.breaks = NULL,
-                                  limits = NULL,
-                                  expand = ggplot2::waiver(),
-                                  accuracy = 1,
-                                  prefix = "$",
-                                  suffix = "",
-                                  ...) {
-  ggplot2::scale_x_continuous(
-    name = name,
-    breaks = breaks,
-    n.breaks = n.breaks,
-    limits = limits,
-    expand = expand,
-    labels = scales::label_dollar(
-      scale_cut = scales::cut_short_scale(),
-      accuracy = accuracy,
-      prefix = prefix,
-      suffix = suffix
-    ),
+#' @examples
+#' \dontrun{
+#' ggplot(data, aes(x, y)) +
+#'   geom_point() +
+#'   scale_y_continuous(labels = label_clever_dollar())
+#' }
+label_clever_dollar <- function(accuracy = 1, prefix = "$", suffix = "", ...) {
+  scales::label_dollar(
+    scale_cut = scales::cut_short_scale(),
+    accuracy = accuracy,
+    prefix = prefix,
+    suffix = suffix,
     ...
   )
 }
