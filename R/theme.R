@@ -1,6 +1,6 @@
 #' Custom minimal theme
 #'
-#' @param market  One of "adevinta","marktplaats","gumtree","kijiji","2dehands"
+#' @param market  One of "adevinta","marktplaats","gumtree","kijiji","2dehands","manychat"
 #' @param base_size  Base font size
 #' @param base_family Base font family (defaults to "DM Sans")
 #' @param heading_family Font family for titles/subtitles (defaults to
@@ -11,6 +11,8 @@
 #' @param legend_position Position of the legend: "bottom", "top", "left",
 #'   "right", or "none".
 #' @param show_y_axis Logical; if `TRUE`, display the Y-axis line.
+#' @param y_axis_angle Angle for y-axis title (default 0 for horizontal,
+#'   use 90 for vertical when labels are long).
 #' @export
 theme_custom <- function(market = "adevinta",
                          base_size = 24,
@@ -19,12 +21,46 @@ theme_custom <- function(market = "adevinta",
                          bg_fill = "#FFFFFF",
                          blank_plot_bg = TRUE,
                          legend_position = "bottom",
-                         show_y_axis = FALSE) {
+                         show_y_axis = FALSE,
+                         y_axis_angle = 0) {
+
+  .check_font_available(base_family)
+  if (heading_family != base_family) .check_font_available(heading_family)
 
   textcol <- .market_text_colour(market)
   plot_bg <- .plot_background(blank_plot_bg, bg_fill)
   .apply_base_theme(base_family, heading_family, base_size, textcol, plot_bg,
-                    legend_position, show_y_axis)
+                    legend_position, show_y_axis, y_axis_angle)
+}
+
+#' Check if font is available
+#' @keywords internal
+.check_font_available <- function(font_family) {
+  # Basic R fonts and sysfonts-registered fonts
+  basic_fonts <- c("sans", "serif", "mono")
+  sysfonts_fonts <- tryCatch(sysfonts::font_families(), error = function(e) character(0))
+
+
+  # Check system fonts if systemfonts package is available
+
+  system_fonts <- tryCatch({
+    if (requireNamespace("systemfonts", quietly = TRUE)) {
+      unique(systemfonts::system_fonts()$family)
+    } else {
+      character(0)
+    }
+  }, error = function(e) character(0))
+
+  available <- font_family %in% c(basic_fonts, sysfonts_fonts, system_fonts)
+
+  if (!available) {
+    warning(
+      "Font '", font_family, "' not found. ",
+      "Text may render with a fallback font.",
+      call. = FALSE
+    )
+  }
+  invisible(available)
 }
 
 .market_text_colour <- function(market) {
@@ -36,6 +72,7 @@ theme_custom <- function(market = "adevinta",
     `2dehands`  = "#00285A",
     manychat    = "#1F1F1F"
   )
+
   if (!market %in% names(text_cols)) stop("Unknown market: ", market, call. = FALSE)
   text_cols[[market]]
 }
@@ -48,13 +85,28 @@ theme_custom <- function(market = "adevinta",
   }
 }
 
+#' Derive a lighter gridline colour from text colour
+#' @keywords internal
+.gridline_colour <- function(textcol) {
+  rgb_vals <- grDevices::col2rgb(textcol) / 255
+  lighter <- rgb_vals + (1 - rgb_vals) * 0.7
+  grDevices::rgb(lighter[1], lighter[2], lighter[3])
+}
+
 .apply_base_theme <- function(base_family, heading_family, base_size, textcol, plot_bg,
-                              legend_position = "bottom", show_y_axis = FALSE) {
+                              legend_position = "bottom", show_y_axis = FALSE,
+                              y_axis_angle = 0) {
   y_axis_line <- if (show_y_axis) {
     ggplot2::element_line(colour = textcol, linewidth = .35)
   } else {
     ggplot2::element_blank()
   }
+
+  y_title_hjust <- if (y_axis_angle == 0) 1 else 0.5
+  y_title_vjust <- if (y_axis_angle == 0) 1 else 0.5
+
+  legend_dir <- if (legend_position %in% c("bottom", "top")) "horizontal" else "vertical"
+  gridline_col <- .gridline_colour(textcol)
 
   ggthemes::theme_tufte(base_family = base_family, base_size = base_size) %+replace%
     ggplot2::theme(
@@ -63,34 +115,75 @@ theme_custom <- function(market = "adevinta",
         family = heading_family,
         face = "bold",
         size = base_size * 1.6,
+        lineheight = 1.1,
         margin = ggplot2::margin(b = base_size * 0.5)
       ),
       plot.subtitle = ggplot2::element_text(
         family = heading_family,
         size = base_size * 1.2,
-        margin = ggplot2::margin(b = base_size * 0.35)
+        lineheight = 1.1,
+        margin = ggplot2::margin(b = base_size * 0.4)
+      ),
+      plot.caption = ggplot2::element_text(
+        size = base_size * 0.75,
+        hjust = 1,
+        lineheight = 1.1,
+        margin = ggplot2::margin(t = base_size * 0.5)
+      ),
+      plot.tag = ggplot2::element_text(
+        size = base_size * 1.2,
+        face = "bold",
+        margin = ggplot2::margin(b = base_size * 0.3, r = base_size * 0.3)
       ),
       axis.title = ggplot2::element_text(
         size = base_size * 1.05,
+        lineheight = 1.0
+      ),
+      axis.title.x = ggplot2::element_text(
         margin = ggplot2::margin(t = base_size * 0.4)
       ),
       axis.title.y = ggplot2::element_text(
-        angle = 0,
-        hjust = 1,
-        vjust = 1,
+        angle = y_axis_angle,
+        hjust = y_title_hjust,
+        vjust = y_title_vjust,
         margin = ggplot2::margin(r = base_size * 0.4)
       ),
       axis.text = ggplot2::element_text(size = base_size * 0.9),
-      legend.title = ggplot2::element_text(size = base_size),
+      axis.text.x = ggplot2::element_text(
+        margin = ggplot2::margin(t = base_size * 0.2)
+      ),
+      axis.text.y = ggplot2::element_text(
+        margin = ggplot2::margin(r = base_size * 0.2)
+      ),
+      legend.title = ggplot2::element_text(
+        size = base_size,
+        margin = ggplot2::margin(b = base_size * 0.15)
+      ),
       legend.text = ggplot2::element_text(size = base_size * 0.85),
       legend.position = legend_position,
+      legend.direction = legend_dir,
+      legend.key.size = grid::unit(base_size * 0.8, "pt"),
+      legend.key.spacing = grid::unit(base_size * 0.25, "pt"),
+      legend.key.spacing.x = grid::unit(base_size * 0.35, "pt"),
+      legend.margin = ggplot2::margin(
+        t = base_size * 0.4,
+        r = base_size * 0.1,
+        b = base_size * 0.1,
+        l = base_size * 0.1
+      ),
+      legend.box.spacing = grid::unit(base_size * 0.5, "pt"),
       panel.grid.major.x = ggplot2::element_blank(),
-      panel.grid.major.y = ggplot2::element_line(colour = "grey80", linewidth = .25),
+      panel.grid.major.y = ggplot2::element_line(colour = gridline_col, linewidth = .25),
       axis.ticks = ggplot2::element_blank(),
       axis.line.x = ggplot2::element_line(colour = textcol, linewidth = .35),
       axis.line.y = y_axis_line,
       plot.background = plot_bg,
-      legend.key.size = grid::unit(base_size * 0.6, "pt"),
+      strip.text = ggplot2::element_text(
+        size = base_size * 0.95,
+        face = "bold",
+        margin = ggplot2::margin(b = base_size * 0.3)
+      ),
+      strip.background = ggplot2::element_blank(),
       plot.margin = ggplot2::margin(
         t = base_size,
         r = base_size,
@@ -104,15 +197,20 @@ theme_custom <- function(market = "adevinta",
 #' Register bundled Manychat fonts
 #' @keywords internal
 register_manychat_fonts <- function() {
+  registered <- sysfonts::font_families()
+  if ("Manychat Gravity" %in% registered && "Rooftop" %in% registered) {
+    return(invisible(NULL))
+  }
+
   fonts_dir <- system.file("fonts", package = "vintalisation")
   regular <- file.path(fonts_dir, "ManychatGravity.otf")
   heading_regular <- file.path(fonts_dir, "Rooftop-Regular.otf")
   heading_bold <- file.path(fonts_dir, "Rooftop-Bold.otf")
 
-  if (file.exists(regular)) {
+  if (file.exists(regular) && !"Manychat Gravity" %in% registered) {
     sysfonts::font_add(family = "Manychat Gravity", regular = regular)
   }
-  if (file.exists(heading_regular)) {
+  if (file.exists(heading_regular) && !"Rooftop" %in% registered) {
     sysfonts::font_add(
       family = "Rooftop",
       regular = heading_regular,
@@ -120,6 +218,7 @@ register_manychat_fonts <- function() {
     )
   }
   showtext::showtext_auto()
+  invisible(NULL)
 }
 
 #' Manychat branded theme
@@ -133,7 +232,8 @@ theme_manychat <- function(market = "manychat",
                            bg_fill = "#FFFFFF",
                            blank_plot_bg = TRUE,
                            legend_position = "bottom",
-                           show_y_axis = FALSE) {
+                           show_y_axis = FALSE,
+                           y_axis_angle = 0) {
   register_manychat_fonts()
   theme_custom(
     market = market,
@@ -143,7 +243,8 @@ theme_manychat <- function(market = "manychat",
     bg_fill = bg_fill,
     blank_plot_bg = blank_plot_bg,
     legend_position = legend_position,
-    show_y_axis = show_y_axis
+    show_y_axis = show_y_axis,
+    y_axis_angle = y_axis_angle
   )
 }
 

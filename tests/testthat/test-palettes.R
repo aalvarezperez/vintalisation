@@ -42,10 +42,9 @@ test_that("show_palette returns palette names when palette is NULL", {
   expect_true("adevinta_brand_1" %in% result)
 })
 
-test_that("show_palette returns colors invisibly", {
+test_that("show_palette returns ggplot object", {
   result <- show_palette("adevinta_brand_1", plot = FALSE)
-  expect_type(result, "character")
-  expect_true(all(grepl("^#[0-9A-Fa-f]{6}$", result)))
+  expect_s3_class(result, "ggplot")
 })
 
 test_that("get_colors returns colors for valid palette names", {
@@ -68,4 +67,29 @@ test_that("get_colors returns all colors when no args provided", {
   all_colors <- get_colors()
   expect_type(all_colors, "character")
   expect_true(length(all_colors) > 10)
+})
+
+test_that("list_palettes returns all palettes by default", {
+  result <- list_palettes()
+  expect_type(result, "character")
+  expect_true(length(result) > 0)
+  expect_true("adevinta_brand_1" %in% result)
+})
+
+test_that("list_palettes filters by source", {
+  result <- list_palettes(source = "manychat")
+  expect_type(result, "character")
+  expect_true(all(grepl("manychat", result)))
+})
+
+test_that("list_palettes filters by category", {
+  result <- list_palettes(category = "accessibility")
+  expect_type(result, "character")
+  expect_true(length(result) > 0)
+})
+
+test_that("list_palettes filters by tags", {
+  result <- list_palettes(tags = "colorblind_safe")
+  expect_type(result, "character")
+  expect_true(length(result) > 0)
 })

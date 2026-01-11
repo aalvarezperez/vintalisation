@@ -12,8 +12,19 @@ show_palette(palette = NULL, reverse = FALSE, plot = TRUE)
 
 \item{reverse}{Logical; reverse the colour order.}
 
-\item{plot}{Logical; draw palette?}
+\item{plot}{Logical; if TRUE, print the plot immediately. If FALSE, just
+return the ggplot object without printing.}
+}
+\value{
+If `palette` is NULL, returns palette names. Otherwise returns a
+  ggplot object (invisibly if `plot = TRUE`).
 }
 \description{
-Show a palette in the viewer
+Displays a palette as colored swatches. When `palette` is NULL, returns
+available palette names. Returns a ggplot object for better RStudio
+integration.
+}
+\examples{
+show_palette("adevinta_brand_1")
+p <- show_palette("manychat_diverging_1", plot = FALSE)
 }
