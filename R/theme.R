@@ -127,6 +127,7 @@ theme_custom <- function(market = "adevinta",
       plot.caption = ggplot2::element_text(
         size = base_size * 0.75,
         hjust = 1,
+        colour = "gray40",
         lineheight = 1.1,
         margin = ggplot2::margin(t = base_size * 0.5)
       ),
@@ -153,6 +154,7 @@ theme_custom <- function(market = "adevinta",
         margin = ggplot2::margin(t = base_size * 0.2)
       ),
       axis.text.y = ggplot2::element_text(
+        hjust = 0,
         margin = ggplot2::margin(r = base_size * 0.2)
       ),
       legend.title = ggplot2::element_text(
