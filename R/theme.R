@@ -159,7 +159,7 @@ theme_custom <- function(market = "adevinta",
       ),
       legend.title = ggplot2::element_text(
         size = base_size,
-        margin = ggplot2::margin(b = base_size * 0.15)
+        margin = ggplot2::margin(b = base_size * 0.4)
       ),
       legend.text = ggplot2::element_text(size = base_size * 0.85),
       legend.position = legend_position,
