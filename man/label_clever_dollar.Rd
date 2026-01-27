@@ -2,7 +2,7 @@
 % Please edit documentation in R/scales.R
 \name{label_clever_dollar}
 \alias{label_clever_dollar}
-\title{Human-readable dollar labels with K/M/B suffixes}
+\title{Human-readable dollar labels with K/M/B suffixes (factory)}
 \usage{
 label_clever_dollar(accuracy = 1, prefix = "$", suffix = "", ...)
 }
@@ -19,13 +19,16 @@ label_clever_dollar(accuracy = 1, prefix = "$", suffix = "", ...)
 A labeling function for use with \code{labels} argument in scales.
 }
 \description{
-Label function for use with ggplot2 scales. Formats large dollar amounts
-with K/M/B suffixes (e.g., 1000 -> $1K, 1500000 -> $1.5M).
+Factory function that returns a labeling function. Use when you need to
+customize accuracy, prefix, or other parameters.
+}
+\details{
+Use with parentheses: \code{labels = label_clever_dollar(prefix = "€")}
 }
 \examples{
 \dontrun{
 ggplot(data, aes(x, y)) +
   geom_point() +
-  scale_y_continuous(labels = label_clever_dollar())
+  scale_y_continuous(labels = label_clever_dollar(prefix = "€"))
 }
 }

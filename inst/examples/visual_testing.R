@@ -52,6 +52,39 @@ p3 <- ggplot(df_legend, aes(x = x, y = y, colour = group)) +
 
 print(p3)
 
+# 8. Continuous color scale with right legend (colorbar overlap test)
+set.seed(42)
+df_continuous <- data.frame(
+  x = rnorm(50, mean = 50, sd = 15),
+  y = rnorm(50, mean = 100, sd = 25),
+  value = runif(50, 0, 100000)
+)
+
+p8 <- ggplot(df_continuous, aes(x = x, y = y, colour = value)) +
+  geom_point(size = 4) +
+  scale_colour_gradient(low = "#E8F4EA", high = "#0D6A3E", labels = clever_number) +
+  labs(
+    title = "Colorbar Legend Test",
+    subtitle = "Title should not overlap with scale values",
+    colour = "Revenue"
+  ) +
+  theme_manychat(legend_position = "right")
+
+print(p8)
+
+# 9. Continuous fill scale with left legend
+p9 <- ggplot(df_continuous, aes(x = x, y = y, fill = value)) +
+  geom_point(size = 4, shape = 21, colour = "white") +
+  scale_fill_gradient(low = "#FFE5E5", high = "#C41E3A", labels = clever_number) +
+  labs(
+    title = "Left Legend Colorbar",
+    subtitle = "Testing title-value spacing",
+    fill = "Amount"
+  ) +
+  theme_manychat(legend_position = "left")
+
+print(p9)
+
 # 4. Small base_size
 p4 <- ggplot(df, aes(x = category, y = value, fill = group)) +
   geom_col(position = "dodge") +
@@ -171,7 +204,8 @@ p3 <- ggplot(df3, aes(x = x, y = y)) +
     segment.curvature = -0.1,
     segment.color = "#1F1F1F"
   ) +
-  scale_colour_manual(values = c("grey70", "#3B42C4")) +
+  scale_color_manychat() + 
+  # scale_colour_manual(values = c("grey70", "#3B42C4")) +
   labs(
     title = "Selective Labeling",
     subtitle = "Highlighting key data points",

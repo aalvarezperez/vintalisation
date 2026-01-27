@@ -315,8 +315,50 @@ scale_fill_stepsn_manychat <- function(palette = "manychat_diverging_1",
 
 #' Human-readable number labels with K/M/B suffixes
 #'
-#' Label function for use with ggplot2 scales. Formats large numbers with
-#' K/M/B suffixes (e.g., 1000 -> 1K, 1500000 -> 1.5M).
+#' Direct labeling function for use with ggplot2 scales. Formats large numbers
+#' with K/M/B suffixes (e.g., 1000 -> 1K, 1500000 -> 1.5M).
+#'
+#' Use without parentheses: \code{labels = clever_number}
+#'
+#' @param x Numeric vector to format.
+#' @return A character vector of formatted labels.
+#' @export
+#' @examples
+#' \dontrun{
+#' ggplot(data, aes(x, y)) +
+#'   geom_point() +
+#'   scale_y_continuous(labels = clever_number)
+#' }
+clever_number <- function(x) {
+ scales::number(x, scale_cut = scales::cut_short_scale(), accuracy = 1)
+}
+
+#' Human-readable dollar labels with K/M/B suffixes
+#'
+#' Direct labeling function for use with ggplot2 scales. Formats large dollar
+#' amounts with K/M/B suffixes (e.g., 1000 -> $1K, 1500000 -> $1.5M).
+#'
+#' Use without parentheses: \code{labels = clever_dollar}
+#'
+#' @param x Numeric vector to format.
+#' @return A character vector of formatted labels.
+#' @export
+#' @examples
+#' \dontrun{
+#' ggplot(data, aes(x, y)) +
+#'   geom_point() +
+#'   scale_y_continuous(labels = clever_dollar)
+#' }
+clever_dollar <- function(x) {
+  scales::dollar(x, scale_cut = scales::cut_short_scale(), accuracy = 1)
+}
+
+#' Human-readable number labels with K/M/B suffixes (factory)
+#'
+#' Factory function that returns a labeling function. Use when you need to
+#' customize accuracy or other parameters.
+#'
+#' Use with parentheses: \code{labels = label_clever_number(accuracy = 0.1)}
 #'
 #' @param accuracy Number to round to (e.g., 0.1 for one decimal place).
 #' @param ... Additional arguments passed to \code{\link[scales]{label_number}}.
@@ -326,17 +368,18 @@ scale_fill_stepsn_manychat <- function(palette = "manychat_diverging_1",
 #' \dontrun{
 #' ggplot(data, aes(x, y)) +
 #'   geom_point() +
-#'   scale_y_continuous(labels = label_clever_number())
+#'   scale_y_continuous(labels = label_clever_number(accuracy = 0.1))
 #' }
 label_clever_number <- function(accuracy = 1, ...) {
-
   scales::label_number(scale_cut = scales::cut_short_scale(), accuracy = accuracy, ...)
 }
 
-#' Human-readable dollar labels with K/M/B suffixes
+#' Human-readable dollar labels with K/M/B suffixes (factory)
 #'
-#' Label function for use with ggplot2 scales. Formats large dollar amounts
-#' with K/M/B suffixes (e.g., 1000 -> $1K, 1500000 -> $1.5M).
+#' Factory function that returns a labeling function. Use when you need to
+#' customize accuracy, prefix, or other parameters.
+#'
+#' Use with parentheses: \code{labels = label_clever_dollar(prefix = "€")}
 #'
 #' @param accuracy Number to round to (e.g., 0.1 for one decimal place).
 #' @param prefix Currency symbol (default "$").
@@ -348,7 +391,7 @@ label_clever_number <- function(accuracy = 1, ...) {
 #' \dontrun{
 #' ggplot(data, aes(x, y)) +
 #'   geom_point() +
-#'   scale_y_continuous(labels = label_clever_dollar())
+#'   scale_y_continuous(labels = label_clever_dollar(prefix = "€"))
 #' }
 label_clever_dollar <- function(accuracy = 1, prefix = "$", suffix = "", ...) {
   scales::label_dollar(

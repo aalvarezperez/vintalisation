@@ -2,6 +2,8 @@
 
 export(adjacent)
 export(analogous)
+export(clever_dollar)
+export(clever_number)
 export(col2HSV)
 export(complementary)
 export(get_colors)
