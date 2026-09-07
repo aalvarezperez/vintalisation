@@ -249,21 +249,3 @@ theme_manychat <- function(market = "manychat",
     y_axis_angle = y_axis_angle
   )
 }
-
-#' Dark-mode wrapper for themes
-#'
-#' @param .theme A ggplot2 theme to convert to dark mode.
-#' @param verbose Logical; print messages produced by `ggdark::dark_mode()`.
-#' @param force_geom_invert Logical; passed to `ggdark::dark_mode()`.
-#' @param black_bg Logical; if `TRUE`, keep the background black.
-#' @return A ggplot2 theme with dark-mode adjustments.
-#' @export
-my_dark_mode <- function(.theme = ggplot2::theme_get(),
-                         verbose = TRUE,
-                         force_geom_invert = FALSE,
-                         black_bg = FALSE) {
-  th <- ggdark::dark_mode(.theme, verbose = verbose,
-                          force_geom_invert = force_geom_invert)
-  if (!black_bg) th <- th + ggplot2::theme(plot.background = ggplot2::element_blank())
-  th
-}

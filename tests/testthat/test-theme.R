@@ -144,41 +144,6 @@ test_that("theme_manychat accepts show_y_axis argument", {
   expect_s3_class(th$axis.line.y, "element_line")
 })
 
-# Test my_dark_mode
-# Note: ggdark::dark_mode() has compatibility issues in some environments
-# These tests verify the function exists and has correct signature
-test_that("my_dark_mode returns a ggplot theme", {
-  skip_if_not_installed("ggdark")
-  # ggdark may have issues with certain ggplot2 versions
-  result <- tryCatch(
-    my_dark_mode(verbose = FALSE),
-    error = function(e) NULL
-  )
-  skip_if(is.null(result), "ggdark incompatible with current ggplot2 version")
-  expect_s3_class(result, "theme")
-})
-
-test_that("my_dark_mode accepts custom theme", {
-  skip_if_not_installed("ggdark")
-  base_theme <- theme_custom()
-  result <- tryCatch(
-    my_dark_mode(.theme = base_theme, verbose = FALSE),
-    error = function(e) NULL
-  )
-  skip_if(is.null(result), "ggdark incompatible with current ggplot2 version")
-  expect_s3_class(result, "theme")
-})
-
-test_that("my_dark_mode accepts black_bg argument", {
-  skip_if_not_installed("ggdark")
-  result <- tryCatch(
-    my_dark_mode(black_bg = FALSE, verbose = FALSE),
-    error = function(e) NULL
-  )
-  skip_if(is.null(result), "ggdark incompatible with current ggplot2 version")
-  expect_s3_class(result, "theme")
-})
-
 # Test register_manychat_fonts
 test_that("register_manychat_fonts runs without error", {
   expect_no_error(register_manychat_fonts())

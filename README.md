@@ -31,16 +31,13 @@ ggplot(mtcars, aes(factor(cyl), fill = factor(gear))) +
   scale_fill_my_palette("studio_accessibility_1") +
   theme_custom("marktplaats")
 
-# 3. Switch to dark mode
-last_plot() + my_dark_mode()
-
-# 4. Use Manychat presets
+# 3. Use Manychat presets
 ggplot(mtcars, aes(factor(cyl), fill = factor(gear))) +
   geom_bar() +
   scale_fill_manychat() +
   theme_manychat()
 
-# 5. Save production-ready files
+# 4. Save production-ready files
 make_plot("gears.png")
 ```
 
@@ -50,7 +47,7 @@ make_plot("gears.png")
   - `get_palette()`/`show_palette()` for inspection.
   - `get_colors()` for regex/name-based extraction.
 - **ggplot2 scales** – `scale_*_my_palette()` provide generic access; `scale_*_manychat()` pre-sets the partner palette defaults for quick use.
-- **Themes** – `theme_custom()` (market aware), `theme_manychat()` for branded typography, plus `my_dark_mode()` for dark UIs.
+- **Themes** – `theme_custom()` (market aware) and `theme_manychat()` for branded typography.
 - **Utilities** – `make_plot()` for reproducible exports, `watermark()` for annotation, `round_any()` for quick numeric rounding.
 
 ## Palette Naming Conventions
