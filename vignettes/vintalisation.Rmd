@@ -63,12 +63,6 @@ ggplot(mtcars, aes(factor(cyl), fill = factor(gear))) +
   theme_manychat()
 ```
 
-Switch to dark mode while keeping the same data and mappings:
-
-```{r dark-mode, eval=FALSE}
-p + my_dark_mode()
-```
-
 ## Saving plots
 
 Use `make_plot()` to enforce consistent dimensions and DPI.

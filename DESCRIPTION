@@ -12,7 +12,6 @@ Imports:
     ggplot2,
     scales (>= 1.1.0),
     ggthemes,
-    ggdark,
     yaml,
     grid,
     sysfonts,
